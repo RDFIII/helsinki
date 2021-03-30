@@ -1,0 +1,6 @@
+title SPA POST
+
+Browser->Server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+Server-->Browser: data.json
+
+// for use in https://www.websequencediagrams.com/
