@@ -34,6 +34,22 @@ const App = () => {
     return (good/total) * 100;
   }
 
+  if (total === 0) {
+    return (
+      <div>
+
+        <h1>give feedback</h1>
+
+        <Button handleClick={handleGoodClick} text="good" />
+        <Button handleClick={handleNeutralClick} text="neutral" />
+        <Button handleClick={handleBadClick} text="bad" />
+        
+        <h1>statistics</h1>
+        <p>no feedback given</p>
+
+      </div>
+    )
+  }
   return (
     <div>
 
