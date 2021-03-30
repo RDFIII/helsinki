@@ -48,13 +48,19 @@ const App = () => {
       <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
-      <p>total {total}</p>
-      <p>average {calculateAverage()}</p>
-      <p>positive {positivePercentage()} %</p>
+      <Statistics total={total} calculateAverage={calculateAverage()} positive={positivePercentage()} />
 
     </div>
   )
 }
+
+const Statistics = ({total, calculateAverage, positive}) => (
+  <div>
+    <p>total {total}</p>
+    <p>average {calculateAverage}</p>
+    <p>positive {positive} </p>
+  </div>
+)
 
 const Button = ({handleClick, text}) => (
   <button onClick={handleClick} >
