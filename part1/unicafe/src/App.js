@@ -27,8 +27,11 @@ const App = () => {
   }
 
   const calculateAverage = () => {
-    let av = average/total;
-    return av;
+    return average/total;
+  }
+
+  const positivePercentage = () => {
+    return (good/total) * 100;
   }
 
   return (
@@ -47,6 +50,7 @@ const App = () => {
       <p>bad {bad}</p>
       <p>total {total}</p>
       <p>average {calculateAverage()}</p>
+      <p>positive {positivePercentage()} %</p>
 
     </div>
   )
