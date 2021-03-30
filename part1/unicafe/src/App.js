@@ -2,20 +2,33 @@ import React, { useState } from 'react'
 
 const App = () => {
   // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [average, setAverage] = useState(0);
+
 
   const handleGoodClick = () => {
     setGood(good + 1);
+    setTotal(total + 1);
+    setAverage(average + 1);
   }
 
   const handleNeutralClick = () => {
     setNeutral(neutral + 1);
+    setTotal(total + 1);
   }
 
   const handleBadClick = () => {
     setBad(bad + 1);
+    setTotal(total + 1);
+    setAverage(average - 1);
+  }
+
+  const calculateAverage = () => {
+    let av = average/total;
+    return av;
   }
 
   return (
@@ -32,6 +45,8 @@ const App = () => {
       <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
+      <p>total {total}</p>
+      <p>average {calculateAverage()}</p>
 
     </div>
   )
