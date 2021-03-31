@@ -64,6 +64,7 @@ const App = () => {
       <Statistics good={good} 
                   bad={bad} 
                   neutral={neutral} 
+                  total={total}
                   calculateAverage={calculateAverage()} 
                   positive={positivePercentage()} />
 
@@ -76,12 +77,17 @@ const Statistics = ({total, calculateAverage, positive, good, neutral, bad}) => 
   
   return (
     <div>
+      <table>
+        <tbody>
+        <Statistic text="good " value={good} />
+        <Statistic text="neutral " value={neutral} />
+        <Statistic text="bad " value={bad} />
+        <Statistic text="total " value={total} />  
+        <Statistic text="average " value={calculateAverage} />
+        <Statistic text="positive percentage % " value={positive} ></Statistic>
+        </tbody>
+      </table>
   
-      <Statistic text="good" value={good} />
-      <Statistic text="neutral" value={neutral} />
-      <Statistic text="bad" value={bad} />
-      <Statistic text="average" value={calculateAverage} />
-      <Statistic text="positive percentage" value={positive} />
 
     </div>
   )
@@ -89,7 +95,12 @@ const Statistics = ({total, calculateAverage, positive, good, neutral, bad}) => 
 
 
 const Statistic = (props) => (
-  <p>{props.text} {props.value}</p>
+
+      <tr>
+        <td>{props.text}</td>
+        <td>{props.value}</td>
+      </tr>
+
 )
 
 const Button = ({handleClick, text}) => (
