@@ -27,6 +27,7 @@ const App = () => {
     }
 
     setVotes(copy);
+    console.log(Object.entries(copy))
   }
 
   const conditional = () => {
@@ -37,8 +38,16 @@ const App = () => {
     }
   }
 
+  const mostVotes = () => {
+    if (Object.keys(votes).length > 0) {
+      let most = Object.keys(votes).reduce((a, b) => votes[a] > votes[b] ? a : b);
+      return anecdotes[most];
+    }
+  }
+
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       <br></br>
 
@@ -49,6 +58,9 @@ const App = () => {
       <button onClick={handleVoteClick}>vote</button>
 
       <button onClick={handleNextClick}>next anecdote</button>
+
+      <h1>Anecdote with most votes</h1>
+      {mostVotes()}
       
     </div>
   )
