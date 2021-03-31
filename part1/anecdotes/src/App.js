@@ -45,12 +45,6 @@ const App = () => {
     }
   }
 
-  const mostVotesEdgeCase = () => {
-    if (votes[selected]) {
-      return ''
-    }
-  }
-
   return (
     <div>
       <h1>Anecdote of the day</h1>
