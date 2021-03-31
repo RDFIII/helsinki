@@ -61,21 +61,35 @@ const App = () => {
       
       <h1>statistics</h1>
 
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <Statistics total={total} calculateAverage={calculateAverage()} positive={positivePercentage()} />
+      <Statistics good={good} 
+                  bad={bad} 
+                  neutral={neutral} 
+                  calculateAverage={calculateAverage()} 
+                  positive={positivePercentage()} />
 
     </div>
   )
 }
 
-const Statistics = ({total, calculateAverage, positive}) => (
-  <div>
-    <p>total {total}</p>
-    <p>average {calculateAverage}</p>
-    <p>positive {positive} </p>
-  </div>
+const Statistics = ({total, calculateAverage, positive, good, neutral, bad}) => {
+  
+  
+  return (
+    <div>
+  
+      <Statistic text="good" value={good} />
+      <Statistic text="neutral" value={neutral} />
+      <Statistic text="bad" value={bad} />
+      <Statistic text="average" value={calculateAverage} />
+      <Statistic text="positive percentage" value={positive} />
+
+    </div>
+  )
+}
+
+
+const Statistic = (props) => (
+  <p>{props.text} {props.value}</p>
 )
 
 const Button = ({handleClick, text}) => (
