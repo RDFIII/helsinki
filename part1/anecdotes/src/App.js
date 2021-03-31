@@ -27,7 +27,7 @@ const App = () => {
     }
 
     setVotes(copy);
-    console.log(Object.entries(copy))
+    
   }
 
   const conditional = () => {
@@ -41,7 +41,13 @@ const App = () => {
   const mostVotes = () => {
     if (Object.keys(votes).length > 0) {
       let most = Object.keys(votes).reduce((a, b) => votes[a] > votes[b] ? a : b);
-      return anecdotes[most];
+      return `${anecdotes[most]} (has ${votes[most]} votes)`;
+    }
+  }
+
+  const mostVotesEdgeCase = () => {
+    if (votes[selected]) {
+      return ''
     }
   }
 
@@ -61,7 +67,6 @@ const App = () => {
 
       <h1>Anecdote with most votes</h1>
       {mostVotes()}
-      
     </div>
   )
 }
