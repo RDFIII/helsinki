@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '643-213-5214' }
-  ]) 
+    { name: 'Arto Hellas', number: '643-213-5214' },
+    { name: 'Homer Simpson', number: '422-521-5675'},
+    { name: 'Babe Ruth', number: '875-432-6743'}
+  ]);
   const [ newName, setNewName ] = useState('');
   const [ newNumber, setNewNumber ] = useState('');
+  const [ filteredName, setFilteredName ] = useState('');
 
   const addName = (event) => {
     event.preventDefault();
@@ -13,7 +16,6 @@ const App = () => {
       alert(`${newName} is already added to the phonebook`)
       return;
     }
-    console.log(persons)
     const newPerson = {
       name: newName,
       number: newNumber
@@ -29,9 +31,29 @@ const App = () => {
     setNewName(event.target.value);
   }
 
+  const handleSearchName = (event) => {
+    setFilteredName(event.target.value);
+  }
+
+  const displayNames = () => {
+    const foundName = persons.find(o => o.name.toLowerCase() === filteredName.toLowerCase())
+
+    if ( persons.some(check => check.name.toLowerCase() === filteredName.toLowerCase())) {
+      return <li>{foundName.name} {foundName.number} </li>
+    } else {
+       return persons.map(person => <li key={person.name}> {person.name} {person.number} </li>)
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
+
+       search name <input
+        value={filteredName} 
+        onChange={handleSearchName} />
+
+      <h2>Add a new number</h2>
 
       <form onSubmit={addName}>
 
@@ -54,7 +76,7 @@ const App = () => {
       <h2>Numbers</h2>
 
       <ul>
-        {persons.map(person => <li key={person.name}> {person.name} {person.number} </li>)}
+        {displayNames()}
       </ul>
      
       
