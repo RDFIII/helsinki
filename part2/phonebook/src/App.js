@@ -1,11 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 
 const App = () => {
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '643-213-5214' },
-    { name: 'Homer Simpson', number: '422-521-5675'},
-    { name: 'Babe Ruth', number: '875-432-6743'}
-  ]);
+  // const [ persons, setPersons ] = useState([
+  //   { name: 'Arto Hellas', number: '643-213-5214' },
+  //   { name: 'Homer Simpson', number: '422-521-5675'},
+  //   { name: 'Babe Ruth', number: '875-432-6743'}
+  // ]);
+
+  const [ persons, setPersons ] = useState([]);
+
+  useEffect(() => {
+    console.log('effect');
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }, [])
+
   const [ newName, setNewName ] = useState('');
   const [ newNumber, setNewNumber ] = useState('');
   const [ filteredName, setFilteredName ] = useState('');
