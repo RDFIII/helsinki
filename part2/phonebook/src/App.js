@@ -49,13 +49,45 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
 
-       search name <input
-        value={filteredName} 
-        onChange={handleSearchName} />
+      <Filter filteredName={filteredName} handleSearchName={handleSearchName} />
 
       <h2>Add a new number</h2>
 
-      <form onSubmit={addName}>
+      <PersonForm 
+        addName={addName} 
+        newName={newName} 
+        handleNameChange={handleNameChange} 
+        newNumber={newNumber} 
+        handleNumberChange={handleNumberChange} 
+      />
+
+      <h2>Numbers</h2>
+
+      <ul>
+        <People displayNames={displayNames()} />
+      </ul>
+     
+      
+    </div>
+
+  )
+}
+
+const Filter = ({ filteredName, handleSearchName }) => (
+  <div>
+    <span>find name </span>
+    <input
+        value={filteredName} 
+        onChange={handleSearchName} />
+  </div>
+)
+
+const People = ({ displayNames }) => (
+  displayNames
+)
+
+const PersonForm = ({ addName, newName, handleNameChange, newNumber, handleNumberChange }) => (
+  <form onSubmit={addName}>
 
         <div>name: <input 
           value={newName}
@@ -71,18 +103,8 @@ const App = () => {
         <div>
           <button type="submit">add</button>
         </div>
-      </form>
+    </form>
+)
 
-      <h2>Numbers</h2>
-
-      <ul>
-        {displayNames()}
-      </ul>
-     
-      
-    </div>
-
-  )
-}
 
 export default App
