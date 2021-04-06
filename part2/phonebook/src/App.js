@@ -27,17 +27,19 @@ const App = () => {
       peopleService.createPerson(newName, newNumber)
         .then(newEntry => {
           setPeople(people.concat(newEntry));
-          console.log(`${newEntry} added to Persons`)
         });
     };
 
   };
 
-  const deletePerson = id => {
-    peopleService.removePerson(id)
+  const deletePerson = (id, name) => {
+    
+    if (window.confirm(`Are you sure you want to delete ${name}?`)) {
+      peopleService.removePerson(id)
       .then(() => {
         setPeople(people.filter(person => person.id !== id))
       })
+    }
   };
 
   return (

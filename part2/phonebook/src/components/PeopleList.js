@@ -8,7 +8,7 @@ const PeopleList = ({ people, search, deletePerson }) => {
                     .map(person => (
                         <li key={person.name}>
                             {person.name} {person.number}
-                            <button onClick={() => deletePerson(person.id)}> Remove</button>
+                            <button onClick={() => deletePerson(person.id, person.name)}> Remove</button>
                         </li>
                     ))
                 }
