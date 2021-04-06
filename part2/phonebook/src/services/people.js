@@ -7,11 +7,13 @@ const getPeople = () => (
         .then(response => response.data)
 )
 
-const create = (name, number) => (
+const createPerson = (name, number) => (
     axios
         .post(baseUrl, {name, number})
         .then(response => response.data)
 );
 
+const removePerson = id => axios.delete(`${baseUrl}/${id}`);
 
-export default { getPeople, create };
+
+export default { getPeople, removePerson };

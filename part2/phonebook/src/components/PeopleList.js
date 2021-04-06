@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PeopleList = ({ people, search }) => {
+const PeopleList = ({ people, search, deletePerson }) => {
     return (
             <ul>
                 {
@@ -8,6 +8,7 @@ const PeopleList = ({ people, search }) => {
                     .map(person => (
                         <li key={person.name}>
                             {person.name} {person.number}
+                            <button onClick={() => deletePerson(person.id)}> Remove</button>
                         </li>
                     ))
                 }

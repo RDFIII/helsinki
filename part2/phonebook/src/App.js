@@ -24,13 +24,20 @@ const App = () => {
     if (alreadyEntered) {
       alert('name already entered!');
     } else {
-      peopleService.create(newName, newNumber)
+      peopleService.createPerson(newName, newNumber)
         .then(newEntry => {
           setPeople(people.concat(newEntry));
           console.log(`${newEntry} added to Persons`)
         });
     };
 
+  };
+
+  const deletePerson = id => {
+    peopleService.removePerson(id)
+      .then(() => {
+        setPeople(people.filter(person => person.id !== id))
+      })
   };
 
   return (
@@ -46,7 +53,7 @@ const App = () => {
         addPerson={addPerson}
       />
       
-      <PeopleList people={people} search={search} />
+      <PeopleList people={people} search={search} deletePerson={deletePerson} />
 
     </div>
  ); 
