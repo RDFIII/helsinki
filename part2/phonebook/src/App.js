@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import peopleService from './services/people';
 import PersonFilter from './components/PersonFilter';
+import PeopleList from './components/PeopleList';
 
 const App = () => {
 
@@ -12,7 +13,7 @@ const App = () => {
   useEffect(() => {
     peopleService.getPeople()
     .then(setPeople)
-  })
+  }, [])
 
   const addPerson = event => {
     event.preventDefault();
@@ -35,6 +36,10 @@ const App = () => {
     <div>
       <h1>Phonebook</h1>
       <PersonFilter search={search} setSearch={setSearch}  />
+      <h3>Add a new person to the phonebook</h3>
+      
+      <PeopleList people={people} search={search} />
+
     </div>
  ); 
 
