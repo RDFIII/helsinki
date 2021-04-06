@@ -1,124 +1,45 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import peopleService from './services/people';
+import PersonFilter from './components/PersonFilter';
 
 const App = () => {
-  // const [ persons, setPersons ] = useState([
-  //   { name: 'Arto Hellas', number: '643-213-5214' },
-  //   { name: 'Homer Simpson', number: '422-521-5675'},
-  //   { name: 'Babe Ruth', number: '875-432-6743'}
-  // ]);
 
-  const [ persons, setPersons ] = useState([]);
+  const [ people, setPeople ] = useState([]);
+  const [ newName, setNewName ]  = useState('');
+  const [ newNumber, setNewNumber ] = useState(''); 
+  const [ search, setSearch ] = useState('');
 
   useEffect(() => {
-    console.log('effect');
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
-  }, [])
+    peopleService.getPeople()
+    .then(setPeople)
+  })
 
-  const [ newName, setNewName ] = useState('');
-  const [ newNumber, setNewNumber ] = useState('');
-  const [ filteredName, setFilteredName ] = useState('');
-
-  const addName = (event) => {
+  const addPerson = event => {
     event.preventDefault();
-    if (persons.some(check => check.name === newName)) {
-      alert(`${newName} is already added to the phonebook`)
-      return;
-    }
-    const newPerson = {
-      name: newName,
-      number: newNumber
-    }
-    setPersons(persons.concat(newPerson))
-  }
 
-  const handleNumberChange = (event) => {
-    setNewNumber(event.target.value);
-  }
+    const alreadyEntered = people.find(person => person.name === newName);
 
-  const handleNameChange = (event) => {
-    setNewName(event.target.value);
-  }
-
-  const handleSearchName = (event) => {
-    setFilteredName(event.target.value);
-  }
-
-  const displayNames = () => {
-    const foundName = persons.find(o => o.name.toLowerCase() === filteredName.toLowerCase())
-
-    if ( persons.some(check => check.name.toLowerCase() === filteredName.toLowerCase())) {
-      return <li>{foundName.name} {foundName.number} </li>
+    if (alreadyEntered) {
+      alert('name already entered!');
     } else {
-       return persons.map(person => <li key={person.name}> {person.name} {person.number} </li>)
-    }
-  }
+      peopleService.create(newName, newNumber)
+        .then(newEntry => {
+          setPeople.concat(newEntry);
+          console.log(`${newEntry} added to Persons`)
+        });
+    };
+
+  };
 
   return (
     <div>
-      <h2>Phonebook</h2>
-
-      <Filter filteredName={filteredName} handleSearchName={handleSearchName} />
-
-      <h2>Add a new number</h2>
-
-      <PersonForm 
-        addName={addName} 
-        newName={newName} 
-        handleNameChange={handleNameChange} 
-        newNumber={newNumber} 
-        handleNumberChange={handleNumberChange} 
-      />
-
-      <h2>Numbers</h2>
-
-      <ul>
-        <People displayNames={displayNames()} />
-      </ul>
-     
-      
+      <h1>Phonebook</h1>
+      <PersonFilter search={search} setSearch={setSearch}  />
     </div>
+ ); 
 
-  )
-}
-
-const Filter = ({ filteredName, handleSearchName }) => (
-  <div>
-    <span>find name </span>
-    <input
-        value={filteredName} 
-        onChange={handleSearchName} />
-  </div>
-)
-
-const People = ({ displayNames }) => (
-  displayNames
-)
-
-const PersonForm = ({ addName, newName, handleNameChange, newNumber, handleNumberChange }) => (
-  <form onSubmit={addName}>
-
-        <div>name: <input 
-          value={newName}
-          onChange={handleNameChange} />
-        </div>
-
-        <div> number <input 
-          value={newNumber}
-          onChange={handleNumberChange}
-        />
-
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-    </form>
-)
+};
 
 
-export default App
+
+export default App;
