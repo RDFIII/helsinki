@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import peopleService from './services/people';
 import PersonFilter from './components/PersonFilter';
 import PeopleList from './components/PeopleList';
+import PersonForm from './components/PersonForm';
 
 const App = () => {
 
@@ -25,7 +26,7 @@ const App = () => {
     } else {
       peopleService.create(newName, newNumber)
         .then(newEntry => {
-          setPeople.concat(newEntry);
+          setPeople(people.concat(newEntry));
           console.log(`${newEntry} added to Persons`)
         });
     };
@@ -37,6 +38,13 @@ const App = () => {
       <h1>Phonebook</h1>
       <PersonFilter search={search} setSearch={setSearch}  />
       <h3>Add a new person to the phonebook</h3>
+      <PersonForm 
+        newName={newName}
+        setNewName={setNewName}
+        newNumber={newNumber}
+        setNewNumber={setNewNumber}
+        addPerson={addPerson}
+      />
       
       <PeopleList people={people} search={search} />
 
