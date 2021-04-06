@@ -1,19 +1,24 @@
 import React from 'react';
 
-const PeopleList = ({ people, search, deletePerson }) => {
+const PeopleList = ({people, search, deletePerson}) => {
+
     return (
-            <ul>
-                {
-                    people.filter(person => person.name.toLowerCase().includes(search.toLowerCase()))
-                    .map(person => (
-                        <li key={person.name}>
-                            {person.name} {person.number}
-                            <button onClick={() => deletePerson(person.id, person.name)}> Remove</button>
-                        </li>
-                    ))
+        people.length ?
+        <ul>    
+            {
+             people.filter(per => per.name.toLowerCase().includes(search.toLowerCase()))   
+                .map(person => (
+                    <li key={person.id}>
+                        {person.name} {person.number}
+                        <button onClick={() => deletePerson(person.id, person.name)}>Delete</button>
+                    </li>
+                )) 
                 }
-            </ul>
-    )
-}
+        </ul>   
+        :
+        <p>Loading phonebook...</p>
+    )        
+
+};
 
 export default PeopleList;

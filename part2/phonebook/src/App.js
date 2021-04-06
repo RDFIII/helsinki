@@ -11,18 +11,35 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState(''); 
   const [ search, setSearch ] = useState('');
 
+  const clear = () => {
+    setNewName('');
+    setNewNumber('');
+  };
+
   useEffect(() => {
     peopleService.getPeople()
-    .then(setPeople)
-  }, [])
+    .then(setPeople);
+  }, []);
 
   const addPerson = event => {
     event.preventDefault();
 
-    const alreadyEntered = people.find(person => person.name === newName);
+    const alreadyExists = people.find(person => person.name === newName);
 
-    if (alreadyEntered) {
-      alert('name already entered!');
+    if (alreadyExists) {
+      
+      window.confirm(`${alreadyExists.name} already exists, would you like to update their number?`) &&
+      
+      peopleService.updatePerson(alreadyExists.id, {name: alreadyExists.name, number: newNumber})
+      .then(updatedPerson => {
+        setPeople(people.map(person => person.id === updatedPerson.id ? updatedPerson : person));
+        
+        clear();
+      })
+      .catch(error => {
+        // When a user tries to update an already deleted person
+        console.log(error)
+      });
     } else {
       peopleService.createPerson(newName, newNumber)
         .then(newEntry => {
