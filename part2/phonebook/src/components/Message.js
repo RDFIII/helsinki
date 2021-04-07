@@ -1,12 +1,13 @@
 import React from 'react';
 
-const Message = ({ message }) => {
+const Message = ({ message, messageType }) => {
+
     if (message === null) {
         return null;
     }
 
     return (
-        <div>
+        <div className={messageType}>
             {message}
         </div>
     )

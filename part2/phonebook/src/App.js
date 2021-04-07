@@ -4,6 +4,7 @@ import PersonFilter from './components/PersonFilter';
 import PeopleList from './components/PeopleList';
 import PersonForm from './components/PersonForm';
 import Message from './components/Message';
+import './index.css';
 
 const App = () => {
 
@@ -12,6 +13,7 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState(''); 
   const [ search, setSearch ] = useState('');
   const [ message, setMessage ] = useState('');
+  const [ messageType, setMessageType] = useState('');
 
   const clear = () => {
     setNewName('');
@@ -47,9 +49,12 @@ const App = () => {
         .then(newEntry => {
           setPeople(people.concat(newEntry));
         });
+        
         setMessage(`Successfully added ${newName} to phonebook`);
+        setMessageType('success')
         setTimeout(() => {
-          setMessage(null)
+          setMessage(null);
+          setMessageType('');
         }, 5000)
     };
 
@@ -68,11 +73,11 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <Message message={message} />
+      <Message message={message} messageType={messageType}  />
       <PersonFilter search={search} setSearch={setSearch}  />
       <h3>Add a new person to the phonebook</h3>
       <PersonForm 
-        newName={newName}
+        newName={newName}   
         setNewName={setNewName}
         newNumber={newNumber}
         setNewNumber={setNewNumber}
