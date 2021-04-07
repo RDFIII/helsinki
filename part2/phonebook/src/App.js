@@ -41,9 +41,16 @@ const App = () => {
         clear();
       })
       .catch(error => {
-        // When a user tries to update an already deleted person
-        console.log(error)
+        setMessage(`${newName} has already been deleted from server`);
+        setMessageType('error');
+        setTimeout(() => {
+          setMessage(null);
+          setMessageType('')
+        }, 5000)
+        console.log(error)  
       });
+      setPeople(people.filter(person => person.id !== alreadyExists.id))
+
     } else {
       peopleService.createPerson(newName, newNumber)
         .then(newEntry => {
@@ -66,7 +73,13 @@ const App = () => {
       peopleService.removePerson(id)
       .then(() => {
         setPeople(people.filter(person => person.id !== id))
-      })
+      });
+      setMessage(`Successfully deleted ${newName} from phonebook`);
+        setMessageType('success')
+        setTimeout(() => {
+          setMessage(null);
+          setMessageType('');
+        }, 5000)
     }
   };
 
